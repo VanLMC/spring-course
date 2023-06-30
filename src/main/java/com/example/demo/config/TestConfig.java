@@ -1,8 +1,10 @@
 package com.example.demo.config;
 
+import com.example.demo.entities.Category;
 import com.example.demo.entities.Order;
 import com.example.demo.entities.User;
 import com.example.demo.entities.enums.OrderStatus;
+import com.example.demo.repositories.CategoryRepository;
 import com.example.demo.repositories.OrderRepository;
 import com.example.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +23,16 @@ public class TestConfig implements CommandLineRunner {
     private UserRepository userRepository;
     @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
     @Override
     public void run(String... args) throws Exception {
+
+        Category cat1 = new Category(null, "Electronics");
+        Category cat2 = new Category(null, "Books");
+        Category cat3 = new Category(null, "Computers");
+
         User u1 = new User(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
         User u2 = new User(null, "Alex Green", "alex@gmail.com", "977777777", "123456");
 
@@ -30,7 +40,7 @@ public class TestConfig implements CommandLineRunner {
         Order o2 = new Order(null, Instant.parse("2022-07-21T03:42:10Z"), OrderStatus.WAITING_PAYMENT, u2);
         Order o3 = new Order(null, Instant.parse("2022-07-22T15:21:22Z"),OrderStatus.WAITING_PAYMENT, u1);
 
-
+        categoryRepository.saveAll(List.of(cat1, cat2, cat3));
         userRepository.saveAll(List.of(u1,u2));
         orderRepository.saveAll(List.of(o1, o2, o3));
 
