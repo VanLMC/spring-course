@@ -2,7 +2,9 @@ package com.example.demo.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "category_table")
@@ -14,6 +16,8 @@ public class Category implements Serializable {
     private Long id;
     private String name;
 
+    @Transient
+    private Set<Product> products  = new HashSet<>();
     public Category(){
 
     }
@@ -50,5 +54,9 @@ public class Category implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id, name);
+    }
+
+    public Set<Product> getProducts() {
+        return products;
     }
 }
